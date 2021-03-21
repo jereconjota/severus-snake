@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "severus-snake",
+    "severus-snake": "severus-snake"
+  }
+}
