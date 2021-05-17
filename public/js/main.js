@@ -1,8 +1,9 @@
-const anchoTablero = 500;
 let intervalo = 120;
 let points = 0;
 let presas = 0;
-let username = 'anonymous';
+let username = '';
+
+const anchoTablero = 500;
 const player = document.getElementById('name');
 const score = document.getElementById('score');
 const record = document.getElementById('record');
@@ -16,6 +17,7 @@ let modal = new bootstrap.Modal(document.getElementById('modal'), {
 let ingreso = new bootstrap.Modal(document.getElementById('ingreso'), {
     keyboard: false,
 });
+
 //inicializamos un objeto con las direcciones que va a tomar la vivorita al apretar una tecla o boton
 const direccion = {
     A: [-1, 0],
@@ -31,10 +33,12 @@ const direccion = {
     ArrowRight: [1, 0],
     ArrowLeft: [-1, 0],
 };
+
 document.getElementById('up').addEventListener('click', () => haciaDonde('ArrowUp'));
 document.getElementById('down').addEventListener('click', () => haciaDonde('ArrowDown'));
 document.getElementById('right').addEventListener('click', () => haciaDonde('ArrowRight'));
 document.getElementById('left').addEventListener('click', () => haciaDonde('ArrowLeft'));
+
 //tablero de la vivorita y el contexto en el q se va a manejar
 let papel = document.querySelector('canvas');
 let contexto = papel.getContext('2d');
@@ -217,12 +221,12 @@ let obtenerRecord = () => {
 
 play.addEventListener('click', () => {
     console.log(document.getElementById('username').value);
-    username = document.getElementById('username').value;
-    if (username != '') {
-        player.innerHTML = username;
+    if (document.getElementById('username').value == '') {
+        username = 'anonymous';
     } else {
-        player.innerHTML = 'anonymous';
+        username = document.getElementById('username').value;
     }
+    player.innerHTML = username;
     ingreso.hide();
     reiniciar();
     looper();
@@ -233,11 +237,12 @@ playagain.addEventListener('click', () => {
     }
     modal.hide();
     reiniciar();
+    console.log(`juega de nuevo ${username}`);
     looper();
 });
 
 function saveScore(score, player) {
-    console.log(`player ${player}`)
+    console.log(`player ${player}`);
     return firebase
         .firestore()
         .collection('scores')
@@ -258,7 +263,6 @@ document.getElementById('ingreso').addEventListener('shown.bs.modal', function (
 document.getElementById('username').addEventListener('keyup', function (event) {
     if (event.key === 'Enter') {
         event.preventDefault();
-        username = document.getElementById('username').value;
         play.click();
     }
 });
