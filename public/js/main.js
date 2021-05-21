@@ -2,6 +2,7 @@ let intervalo = 120;
 let points = 0;
 let presas = 0;
 let username = '';
+let vuelta = 0;
 
 const anchoTablero = 500;
 const player = document.getElementById('name');
@@ -55,6 +56,8 @@ let controles = {
 
 //funcion recursiva que se va a ejecutar cada un intervalo determinado
 let looper = () => {
+    vuelta++;
+    console.log(vuelta)
     let cola = {};
     Object.assign(cola, controles.vivora[controles.vivora.length - 1]);
 
@@ -75,6 +78,18 @@ let looper = () => {
             }
         }
     }
+    //si se pone a pasear, cada 100 avances se va a aumentar la velocidad como si hubiera atrapado
+    //una presa, cuando el intervalo es 70 o menor, la vuelta te suma 1 de velocidad
+    if (vuelta == 100) {
+        if (intervalo <= 90) {
+            intervalo = intervalo - 5;
+            vuelta = 0;
+        } else {
+            intervalo = intervalo - 12;
+            vuelta = 0;
+        }
+    }
+
     if (atrapada) {
         controles.crecimiento += 2;
         dibujarPresa();
@@ -82,8 +97,9 @@ let looper = () => {
         score.innerHTML = points;
         presas++;
         if (presas % 3 == 0) {
-            intervalo = intervalo - 15;
+            intervalo = intervalo - 12;
         }
+        vuelta = 0;
     }
     if (controles.crecimiento > 0) {
         controles.vivora.push(cola);
@@ -203,10 +219,12 @@ let controlesEnCero = () => {
         jugando: false,
         crecimiento: 0,
     };
+    vuelta = 0;
 };
 
 window.onload = () => {
     obtenerRecord();
+    vuelta = 0;
     ingreso.show();
 };
 
