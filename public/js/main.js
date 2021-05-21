@@ -57,7 +57,6 @@ let controles = {
 //funcion recursiva que se va a ejecutar cada un intervalo determinado
 let looper = () => {
     vuelta++;
-    console.log(vuelta)
     let cola = {};
     Object.assign(cola, controles.vivora[controles.vivora.length - 1]);
 
