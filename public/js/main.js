@@ -257,6 +257,15 @@ playagain.addEventListener('click', () => {
     console.log(`juega de nuevo ${username}`);
     looper();
 });
+close.addEventListener('click', () => {
+    modal.hide();
+    reiniciar();
+    player.innerHTML = '...';
+    document.getElementById('username').value = '';
+    points = 0;
+    score.innerHTML = points;
+    ingreso.show();
+});
 
 function saveScore(score, player) {
     console.log(`player ${player}`);
