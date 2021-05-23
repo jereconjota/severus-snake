@@ -3,6 +3,7 @@ let points = 0;
 let presas = 0;
 let username = '';
 let vuelta = 0;
+let valorPorVuelta = 40;
 
 const anchoTablero = 500;
 const player = document.getElementById('name');
@@ -94,8 +95,8 @@ let looper = () => {
         controles.crecimiento += 2;
         dibujarPresa();
         //Si captura la presa antes de 35 movimientos, a la recompensa se le suman los movimientos que hiciste antes de atraparla, sino, solo se suma solo la recompensa
-        if (vuelta < 35) {
-            suma = 100 + vuelta;
+        if (vuelta < valorPorVuelta) {
+            suma = 100 + (valorPorVuelta - vuelta);
         } else {
             suma = 100
         }
