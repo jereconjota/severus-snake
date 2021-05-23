@@ -58,6 +58,7 @@ let controles = {
 let looper = () => {
     vuelta++;
     let cola = {};
+    let suma = 0;
     Object.assign(cola, controles.vivora[controles.vivora.length - 1]);
 
     let dx = controles.direccion.x; //obtengo movimiento horizontal
@@ -79,32 +80,40 @@ let looper = () => {
     }
     //si se pone a pasear, cada 100 avances se va a aumentar la velocidad como si hubiera atrapado
     //una presa, cuando el intervalo es 70 o menor, la vuelta te suma 1 de velocidad
-    if (vuelta == 100) {
-        if (intervalo <= 90) {
-            intervalo = intervalo - 5;
-            vuelta = 0;
-        } else {
-            intervalo = intervalo - 12;
-            vuelta = 0;
-        }
-    }
+    // if (vuelta == 100) {
+    //     if (intervalo <= 90) {
+    //         intervalo = intervalo - 5;
+    //         vuelta = 0;
+    //     } else {
+    //         intervalo = intervalo - 12;
+    //         vuelta = 0;
+    //     }
+    // }
 
     if (atrapada) {
         controles.crecimiento += 2;
         dibujarPresa();
-        points = points + 100;
+        //Si captura la presa antes de 35 movimientos, a la recompensa se le suman los movimientos que hiciste antes de atraparla, sino, solo se suma solo la recompensa
+        if (vuelta < 35) {
+            suma = 100 + vuelta;
+        } else {
+            suma = 100
+        }
+
+        points = points + suma;
         score.innerHTML = points;
         presas++;
         if (presas % 3 == 0) {
-            intervalo = intervalo - 12;
+            intervalo = intervalo - 15;
         }
         vuelta = 0;
     }
+
     if (controles.crecimiento > 0) {
         controles.vivora.push(cola);
         controles.crecimiento -= 1;
     }
-    points++;
+    // points++;
     score.innerHTML = points;
 
     if (detectarChoque()) {
