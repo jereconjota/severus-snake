@@ -104,8 +104,8 @@ let looper = () => {
         points = points + suma;
         score.innerHTML = points;
         presas++;
-        if (presas % 3 == 0) {
-            intervalo = intervalo - 15;
+        if (presas % 2 == 0) {
+            intervalo = intervalo - 8;
         }
         vuelta = 0;
     }
